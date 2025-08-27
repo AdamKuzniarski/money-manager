@@ -1,12 +1,15 @@
 import useSWR from "swr";
+import { useState } from "react";
 import styled from "styled-components";
 import AccountBalance from "@/components/AccountBalance";
 import TransactionItem from "@/components/TransactionItem";
+import IncomeExpenseView from "@/components/IncomeExpenseView";
 import Form from "@/components/CreateTransaction";
-import { useState } from "react";
+import { STATE } from "@/constants/state";
 
 export default function HomePage() {
   const [isFormVisible, setIsFormVisible] = useState(false);
+  const [filterType, setFilterType] = useState(STATE.ALL);
 
   function handleToggle() {
     setIsFormVisible(!isFormVisible);
@@ -38,6 +41,11 @@ export default function HomePage() {
     await mutate();
   }
 
+  //filter transactions for rendering
+  const filteredTransactions = transactions.filter(
+    (transaction) => filterType === STATE.ALL || transaction.type === filterType
+  );
+
   return (
     <>
       <AccountBalance transactions={transactions} />
@@ -47,8 +55,12 @@ export default function HomePage() {
       {isFormVisible && (
         <Form onSubmit={handleSubmit} transactions={transactions} />
       )}
+      <IncomeExpenseView
+        transactions={transactions}
+        onFilter={setFilterType}
+      ></IncomeExpenseView>
       <TransactionsList>
-        {transactions.map((transaction) => (
+        {filteredTransactions.map((transaction) => (
           <TransactionItem transaction={transaction} key={transaction._id} />
         ))}
       </TransactionsList>
