@@ -1,13 +1,19 @@
 import React, { useState } from "react";
 import { STATE } from "@/constants/state";
 
-export default function IncomeExpenseView({ transactions, onFilter }) {
+export default function IncomeExpenseView({
+  transactions,
+  incomeTotal,
+  expenseTotal,
+  balanceTotal,
+  onFilter,
+}) {
   const [filterType, setFilterType] = useState(STATE.ALL);
-  const [formData, setFormData] = useState({
-    description: "",
-    amount: "",
-    type: STATE.INCOME,
-  });
+  // const [formData, setFormData] = useState({
+  //   description: "",
+  //   amount: "",
+  //   type: STATE.INCOME,
+  // });
 
   //Change radio button
   function handleFilterType(event) {

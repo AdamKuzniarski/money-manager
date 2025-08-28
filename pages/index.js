@@ -8,6 +8,7 @@ import Form from "@/components/CreateTransaction";
 import { STATE } from "@/constants/state";
 
 export default function HomePage() {
+  
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [filterType, setFilterType] = useState(STATE.ALL);
 
