@@ -11,6 +11,8 @@ const GlobalStyle = createGlobalStyle`
   --primary: #0a84ff;
   --positive: #16a34a;
   --negative: #dc2626;
+  --badge-bg: #f0f0f0;
+  --badge-text: #333;
 }
 
 /* Systempräferenz: Dark als Startbpunkt*/
@@ -38,17 +40,22 @@ const GlobalStyle = createGlobalStyle`
     --primary: #0a84ff;
     --positive: #16a34a;
     --negative: #dc2626;
+    --badge-bg: #f0f0f0;
+    --badge-text: #333;
   }
 
  html[data-theme="dark"] {
-    --bg: #0b0f14;
-    --fg: #e6e6e6;
+    --background: #0b0f14;
+    --foreground: #e6e6e6;
     --surface: #11161c;
     --muted: #9aa0a6;
     --border: #2a2f36;
     --primary: #0a84ff;
     --positive: #22c55e;
     --negative: #f87171;
+    --badge-bg: #333;
+    --badge-text: #f0f0f0;
+
   }
 
  /* Baseline */
@@ -78,7 +85,7 @@ const GlobalStyle = createGlobalStyle`
 
   input, select {
     font: inherit;
-    color: var(--fg);
+    color: var(--foreground);
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 6px;

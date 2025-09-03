@@ -45,8 +45,9 @@ const DateText = styled.span`
 const CategoryBadge = styled.span`
   margin-left: 0.5rem;
   padding: 0.1rem 0.5rem;
-  border: 1.5px solid black;
+  border: 1.5px solid currentColor; 
   border-radius: 10px;
-  background: #fff;
+  background: var(--badge-bg, #f0f0f0); 
+  color: var(--badge-text, #333); 
   font-size: 0.85rem;
 `;

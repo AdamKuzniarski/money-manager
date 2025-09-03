@@ -1,27 +1,26 @@
 import styled from "styled-components";
+import { toCurrencyEUR } from "@/lib/format";
 
 export default function AccountBalance({ transactions }) {
   if (!transactions) return null;
 
-  const balanceTotal = transactions.reduce((acc, transaction) => {
-    return acc + Number(transaction.amount);
-  }, 0);
+  const balance = transactions.reduce(
+    (sum, transaction) => sum + transaction.amount,
+    0
+  );
 
   return (
-    <StyledAccountBalance balance={balanceTotal}>
-      <h2>Account balance</h2>
-      <h3>
-        {new Intl.NumberFormat("de-DE", {
-          style: "currency",
-          currency: "EUR",
-        }).format(balanceTotal)}
-      </h3>
-    </StyledAccountBalance>
+    <BalanceContainer>
+      <h2>Account Balance</h2>
+      <BalanceValue isNegative={balance < 0}>
+        {toCurrencyEUR(balance)}
+      </BalanceValue>
+    </BalanceContainer>
   );
 }
 
-const StyledAccountBalance = styled.div`
-  color: ${({ balance }) => (balance > 0 ? "green" : "red")};
+const BalanceContainer = styled.div`
+  color: black;
   padding: 25px 35px;
   background: whitesmoke;
   border-radius: 25px;
@@ -29,4 +28,8 @@ const StyledAccountBalance = styled.div`
   border: 2px solid black;
   max-width: 450px;
   margin-bottom: 1rem;
+`;
+
+const BalanceValue = styled.h2`
+  color: ${({ isNegative }) => (isNegative ? "red" : "green")};
 `;
