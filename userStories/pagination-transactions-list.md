@@ -1,4 +1,4 @@
-# Transactions List  pagination-transactions-list.md
+# pagination-transactions-list
 
 ## Value Proposition
 
@@ -20,7 +20,10 @@ Capstone Group Todo: Add wireframes
 - Items per page options: 10, 15, 20
 - The UI clearly indicates which page the user is on
 - Disable Previous button on first page and Next button on last page
-
+- filtered resutls are paginated when the transachtios list is too long
+- pagination adjusts if filtered data is samller then 10 results
+- pagination are handled on client side only.(no API changes required)
+- Account balance always shows the current balance, independent of pagination or filtering.
 
 ## Tasks
 
@@ -29,6 +32,8 @@ Capstone Group Todo: Add wireframes
     - [ ] Props: currentPage, totalPage, pageSize, onPageChange, onPageSizeChange
     - [ ] Render: Previous/Page Numbers/Next + dropdown for items per page
 - [ ] Add default config: pageSize = 10 (make adjustable up to 50)
-- [ ] Update transaction list state management to handle pagination data
+- [ ] Implement logic to slice the transactions list on the client based on 
+    currentPage and pageSize
+- [ ] Reset to page 1 when pageSize changes
 
 

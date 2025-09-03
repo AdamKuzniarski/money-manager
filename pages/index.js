@@ -2,12 +2,16 @@ import styled from "styled-components";
 import { useState } from "react";
 import useSWR from "swr";
 import { STATE } from "@/constants/state";
+import { useMemo, useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
 import AccountBalance from "@/components/AccountBalance";
 import TransactionItem from "@/components/TransactionItem";
 import Form from "@/components/TransactionForm";
 import IncomeExpenseView from "@/components/IncomeExpenseView";
 import ThemeToggle from "@/components/ThemeToggle";
 import AuthButtons from "@/components/AuthButtons";
+import useSWR from "swr";
+import Pagination from "@/components/Pagination";
 import FilterBar from "@/components/FilterBar";
 import PieChartSection from "@/components/PieChartSection";
 import { getFilteredTransactions, getTotals } from "@/lib/home-calcs";
@@ -15,6 +19,24 @@ import { getFilteredTransactions, getTotals } from "@/lib/home-calcs";
 export default function HomePage() {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingTransaction, setEditingTransaction] = useState(null);
+
+  
+  const { data: session, status } = useSession();
+
+  //pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(1);
+
+  function handleToggle() {
+    setIsFormVisible(!isFormVisible);
+    if (isFormVisible) setEditingTransaction(null);
+  }
+
+  function handleCancel() {
+    setEditingTransaction(null);
+    setIsFormVisible(false);
+  }
+
   const [filters, setFilters] = useState({ category: "", type: STATE.ALL });
   const [isChartOpen, setIsChartOpen] = useState(false);
 
@@ -27,9 +49,15 @@ export default function HomePage() {
   } = useSWR("/api/transactions");
   const { data: categories = [] } = useSWR("/api/categories");
 
+
+  const { data: categories = [] } = useSWR("/api/categories");
+
+  // filter Logik
+
   //Early returns
   if (error) return <div>failed to load</div>;
   if (isLoading) return <p>Loading...</p>;
+
 
   // Helpers
   const filteredTransactions = getFilteredTransactions(transactions, filters);
@@ -50,9 +78,50 @@ export default function HomePage() {
     setIsFormOpen(false);
   }
 
+
+  const filteredTransactions = useMemo(() => {
+    let result = transactions;
+
+    //ctegory filter
+    if (filterCategory) {
+      result = result.filter(
+        (transaction) => transaction.category === filterCategory
+      );
+    }
+
+    if (filterType != STATE.ALL) {
+      result = result.filter((transaction) => transaction.type === filterType);
+    }
+    return result;
+  }, [transactions, filterCategory, filterType]);
+
+  //pagination and values
+  const totalPages = Math.max(
+    1,
+    Math.ceil(filteredTransactions.length / pageSize)
+  );
+  const paginatedTransactions = useMemo(() => {
+    const start = (currentPage - 1) * pageSize;
+    return filteredTransactions.slice(start, start + pageSize);
+  }, [filteredTransactions, currentPage, pageSize]);
+
+ 
+
+  //calculations
+  const sumIncome = filteredTransactions
+    .filter((transaction) => transaction.type === STATE.INCOME)
+    .reduce((total, transaction) => total + Number(transaction.amount), 0);
+
+  const sumExpense = filteredTransactions
+    .filter((transaction) => transaction.type === STATE.EXPENSE)
+    .reduce((total, transaction) => total + Number(transaction.amount), 0);
+
+  const sumTotal = sumIncome - sumExpense;
+
   function toggleChart() {
     setIsChartOpen(!isChartOpen);
   }
+
 
   //Filter section
   function setFilterCategory(value) {
@@ -167,23 +236,53 @@ export default function HomePage() {
           }
           defaultValues={editingTransaction}
           onCancel={handleCancelEdit}
+
         />
-      )}
-      <TransactionsList>
-        {filteredTransactions.length === 0 ? (
-          <EmptyState>No Results available</EmptyState>
-        ) : (
-          filteredTransactions.map((transaction) => (
-            <TransactionItem
-              onEdit={handleEdit}
-              onDelete={handleDelete}
-              transaction={transaction}
-              key={transaction._id}
-              onFilter={setFilterType}
-            />
-          ))
+        <ToggleButton onClick={handleToggle} disabled={editingTransaction}>
+          {isFormVisible ? `Hide Form` : "Show Form"}
+        </ToggleButton>
+        {isFormVisible && (
+          <Form
+            onSubmit={
+              editingTransaction
+                ? (data) => handleUpdate(editingTransaction._id, data)
+                : handleSubmit
+            }
+            defaultValues={editingTransaction}
+            transactions={transactions}
+            onCancel={handleCancel}
+          />
         )}
+        <TransactionsList>
+          {filteredTransactions.length === 0 ? (
+            <EmptyState>No Results available</EmptyState>
+          ) : (
+            paginatedTransactions.map((transaction) => (
+              <TransactionItem
+                onEdit={handleEdit}
+                onDelete={handleDelete}
+                transaction={transaction}
+                key={transaction._id}
+                onFilter={setFilterType}
+              />
+            ))
+          )}
+        </TransactionsList>
+        {/* pagination control under transactions list */}
+        {filteredTransactions.length > 0 && (
+          <PaginationContainer>
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              pageSize={pageSize}
+              onPageChange={setCurrentPage}
+              onPageSizeChange={setPageSize}
+            />
+          </PaginationContainer>
+        )}
+
       </TransactionsList>
+
     </>
   );
 }
@@ -195,6 +294,7 @@ const TransactionsList = styled.ul`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  align-items: center;
 `;
 
 const ToggleButton = styled.button`
@@ -231,3 +331,24 @@ const EmptyState = styled.p`
   margin: 0.5rem 20px;
   opacity: 0.8;
 `;
+
+
+const BalanceAmount = styled.span`
+  color: ${({ $isPositive }) => ($isPositive ? "#22c55e" : "#ef4444")};
+  font-weight: bold;
+`;
+
+const PaginationContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center; /* mittig */
+  align-items: center;
+  margin-top: 1rem;
+`;
+
+const ListBlock = styled.div`
+  width: 100%;
+  max-width: 450px; /* gleiche/ähnliche Breite wie deine Cards */
+  margin: 0 auto; /* zentriert den Block */
+`;
+
