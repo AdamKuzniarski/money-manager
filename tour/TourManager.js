@@ -1,58 +1,42 @@
+// tour/index.js
 import { driver } from "driver.js";
 import { getSteps } from "./steps";
 
 const KEY = "hasSeenTour";
 
-export function startTour() {
+export function startTour(translate) {
   const tourDriver = driver({
     animate: true,
     showProgress: true,
     stageBackground: "rgba(255,165,0,0.3)",
-    steps,
+    steps: getSteps(translate), // <— hier reinreichen
+    onDestroyed: () => localStorage.setItem(KEY, "true"),
   });
   tourDriver.drive();
 }
 
-export async function restartTour() {
+export function restartTour(translate) {
   localStorage.removeItem(KEY);
-  await startTour();
+  startTour(translate);
 }
 
-export async function maybeStartTour() {
-  try {
-    if (typeof window === "undefined") return;
-    const seen = localStorage.getItem(KEY);
-    if (seen === "true") return;
-    const tourDriver = await driver(opts);
-    tourDriver.drive();
-    tourDriver.on("destroyed", () => {
-      localStorage.setItem(KEY, "true");
-    });
-  } catch {
-    // fail silently
-  }
-}
+export function maybeStartTour(translate) {
+  if (typeof window === "undefined") return;
+  const seen = localStorage.getItem(KEY);
+  if (seen === "true") return;
 
-function getEl(target) {
-  return target?.element || target;
-}
+  const tourDriver = driver({
+    showProgress: true,
+    allowClose: true,
+    overlayOpacity: 0.55,
+    stagePadding: 16,
+    stageRadius: 14,
+    overlayColor: "rgba(9, 29, 93, 0.55)",
+    popoverClass: "mm-tour",
+    steps: getSteps(translate), // <— auch hier
+    onDestroyed: () => localStorage.setItem(KEY, "true"),
+  });
 
-function getGlowTarget(target) {
-  const el = getEl(target);
-  return el?.querySelector?.('[data-tour-target="inner"]') || el;
+  tourDriver.drive();
+  
 }
-
-const opts = {
-  showProgress: true,
-  allowClose: true,
-  overlayOpacity: 0.55,
-  stagePadding: 16,
-  stageRadius: 14,
-  overlayColor: "rgba(9, 29, 93, 0.55)",
-  popoverClass: "mm-tour",
-  steps: getSteps(),
-  onHighlightStarted: (target) =>
-    getGlowTarget(target)?.classList?.add("mm-glow"),
-  onHighlighted: (target) => getGlowTarget(target)?.classList?.add("mm-glow"),
-  onDeselected: (target) => getGlowTarget(target)?.classList?.remove("mm-glow"),
-};

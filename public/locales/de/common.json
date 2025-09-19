@@ -1,0 +1,207 @@
+{
+  "nav": {
+    "home": "Start",
+    "add": "Hinzufügen",
+    "charts": "Diagram"
+  },
+  "intl": {
+    "language": "Sprache",
+    "en": "En",
+    "de": "De"
+  },
+  "auth": {
+    "signIn": "Anmelden",
+    "signOut": "Abmelden",
+    "notSignedIn": "Nicht angemeldet"
+  },
+  "common": {
+    "loading": "Lädt...",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "delete": "Löschen",
+    "edit": "Bearbeiten",
+    "apply": "Übernehmen"
+  },
+  "balance": {
+    "title": "Kontostand",
+    "aria": "Kontostand ist {{value}}"
+  },
+  "filters": {
+    "title": "Filter Kat / Einkommen filtern",
+    "filteredBalance": "Gefilterter Saldo",
+    "filteredBalanceAria": "Gefilterter Saldo beträgt {{value}} Euro",
+    "timeSpan": "Zeitraum",
+    "category": "Kategorie",
+    "allCategories": "Alle Kategorien",
+    "timeFilter": "Zeitfilter",
+    "all": "Alle",
+    "today": "Heute",
+    "last7": "Letzte 7 Tage",
+    "last30": "Letzte 30 Tage",
+    "thisMonth": "Diesen Monat",
+    "custom": "Benutzerdefiniert…",
+    "customRange": "Benutzerdefinierter Zeitraum",
+    "from": "Von",
+    "to": "Bis",
+    "byType": "Nach Typ filtern",
+    "type": {
+      "all": "Alle",
+      "income": "Einnahme",
+      "expense": "Ausgabe"
+    }
+  },
+  "csv": {
+    "export": "CSV exportieren",
+    "import": "CSV importieren"
+  },
+  "pagination": {
+    "previous": "Zurück",
+    "next": "Weiter",
+    "pageOf": "Seite {{page}} von {{pages}}",
+    "perPage": "{{size}} pro Seite"
+  },
+  "transactions": {
+    "uncategorized": "Ohne Kategorie"
+  },
+  "create": {
+    "title": "Transaktion erstellen"
+  },
+  "form": {
+    "header": "Bitte alle Felder ausfüllen",
+    "name": "Name der Transaktion",
+    "namePh": "Bitte Namen eintragen",
+    "amount": "Betrag",
+    "amountPh": "Bitte Betrag eintragen",
+    "chooseCategory": "Kategorie wählen",
+    "type": "Typ",
+    "income": "Einnahme",
+    "expense": "Ausgabe",
+    "date": "Datum",
+    "add": "Hinzufügen",
+    "cancelAria": "Abbrechen"
+  },
+  "screen": {
+    "failedToLoad": "Laden fehlgeschlagen",
+    "transactionsTitle": "Transaktionen",
+    "noResults": "Keine Ergebnisse verfügbar",
+    "unknown": "unbekannt",
+    "transactionAria": "{{name}}: {{amount}}€ {{date}}"
+  },
+  "actions": {
+    "confirmDelete": "Möchtest du diese Transaktion wirklich löschen?"
+  },
+  "charts": {
+    "title": "Transaktionen nach Kategorie",
+    "failedToLoad": "Transaktionen konnten nicht geladen werden",
+    "loading": "Transaktionen werden geladen...",
+    "expense": "Ausgabe",
+    "income": "Einnahme",
+    "total": "Summe",
+    "sum": "Summe",
+    "noTransactions": "Keine Transaktionen vorhanden.",
+    "noDataFor": "Keine Daten für {{mode}} gefunden.",
+    "summaryAria": "Zusammenfassung Kreisdiagramm",
+    "summaryText": "Kreisdiagramm mit Ausgaben nach Kategorie.",
+    "categories": "Kategorien",
+    "time": "Zeit",
+    "range": {
+      "7d": "7 T",
+      "30d": "30 T",
+      "90d": "90 T",
+      "ytd": "JMT",
+      "from": "Von",
+      "to": "Bis"
+    }
+  },
+
+  "categories": {
+    "Restaurants": "Restaurants",
+    "Education": "Bildung",
+    "Salary": "Gehalt",
+    "Savings": "Sparen",
+    "Groceries": "Lebensmittel",
+    "Entertainment": "Unterhaltung",
+    "Utilities": "Nebenkosten",
+    "Health": "Gesundheit",
+    "Rent": "Miete",
+    "Transportation": "Verkehr",
+    "Insurance": "Versicherung",
+    "Investment": "Investitionen"
+  },
+
+  "toasts": {
+    "saved": "Transaktion gespeichert!",
+    "deleted": "Transaktion gelöscht!",
+    "error": "Bitte versuche es erneut.",
+    "dataSaved": "Erledigt: Daten gespeichert.",
+    "importSuccess": "Import erfolgreich.",
+    "exportSuccess": "Export erfolgreich. Datei wurde heruntergeladen.",
+    "dataSavedCount": "{{count}} Zeile gespeichert",
+    "dataSavedCount_plural": "{{count}} Zeilen gespeichert",
+    "importInProgress": "Import läuft…",
+    "selectFileBefore": "Bitte vor dem Import eine .csv-Datei auswählen.",
+    "onlyCsv": "Bitte eine .csv-Datei auswählen.",
+    "importFail": "Import fehlgeschlagen!",
+    "parseFail": "Import fehlgeschlagen: CSV enthält Fehler.",
+    "readFail": "Import fehlgeschlagen: Daten konnten nicht gelesen werden.",
+    "exportFail": "Export fehlgeschlagen!",
+    "noData": "Keine Daten zum Exportieren!"
+  },
+  "tour": {
+    "intro": {
+      "title": "Willkommen in Money Manager",
+      "desc": "So behältst du deine Finanzen einfach im Blick."
+    },
+    "balance": {
+      "title": "Kontostand",
+      "desc": "Zeigt deinen Gesamtsaldo. Aktualisiert sich beim Hinzufügen, Bearbeiten oder Löschen."
+    },
+    "filters": {
+      "title": "Ansicht filtern",
+      "desc": "Nach Kategorie oder Zeitraum filtern. Voreinstellungen oder eigener Zeitraum."
+    },
+    "timePresets": {
+      "title": "Zeit-Voreinstellungen",
+      "desc": "Wechsle schnell zwischen Heute, Letzte 7 Tage, Dieser Monat oder eigener Bereich."
+    },
+    "list": {
+      "title": "Transaktionen",
+      "desc": "Hier erscheinen deine Einträge. Du kannst sie jederzeit bearbeiten oder löschen."
+    },
+    "add": {
+      "title": "Neue Transaktion",
+      "desc": "Tippe hier, um Einnahmen oder Ausgaben hinzuzufügen."
+    },
+    "analytics": {
+      "title": "Diagramme & Insights",
+      "desc": "Öffne Analytics, um Ausgaben nach Kategorie zu sehen."
+    },
+    "perPage": {
+      "title": "Einträge pro Seite",
+      "desc": "Wähle 10, 15 oder 20. Beim Ändern springt die Liste auf Seite 1."
+    },
+    "csvExport": {
+      "title": "Daten exportieren",
+      "desc": "Lade deine Transaktionen als CSV herunter."
+    },
+    "csvImport": {
+      "title": "Daten importieren",
+      "desc": "Eigene CSV importieren und Transaktionen hinzufügen."
+    },
+    "chart": {
+      "title": "Kategorie-Übersicht",
+      "desc": "Ein Kreisdiagramm fasst Kategorien zusammen und zeigt Trends."
+    },
+    "buttons": {
+      "next": "Weiter",
+      "prev": "Zurück",
+      "done": "Fertig",
+      "close": "Schließen"
+    }
+  },
+  "timeline": {
+    "title": "Kontoverlauf über die Zeit",
+    "balance": "Kontostand",
+    "caption": "Kumulierte Tagesstände. Die Nulllinie trennt negative von positiven Werten."
+  }
+}

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useI18n } from "@/lib/use-i18n";
 import {
   ResponsiveContainer,
   LineChart,
@@ -22,14 +23,14 @@ function buildAccountBalanceSeries(transactions = [], dateFrom, dateTo) {
   if (endDate) endDate.setHours(23, 59, 59, 999);
 
   function toLocalISO(date) {
-  return (
-     date.getFullYear() +
-     "-" +
-     String(date.getMonth() + 1).padStart(2, "0") +
-     "-" +
-     String(date.getDate()).padStart(2, "0")
-   );
- }
+    return (
+      date.getFullYear() +
+      "-" +
+      String(date.getMonth() + 1).padStart(2, "0") +
+      "-" +
+      String(date.getDate()).padStart(2, "0")
+    );
+  }
 
   const initialBalance = startDate
     ? transactions.reduce((acc, t) => {
@@ -79,7 +80,7 @@ function buildAccountBalanceSeries(transactions = [], dateFrom, dateTo) {
     balanceSeries.unshift({
       date: toLocalISO(startDate),
       balance: Number(initialBalance.toFixed(2)),
-   });
+    });
   }
   return balanceSeries;
 }
@@ -90,9 +91,15 @@ export default function AccountBalanceTimeLine({
   endDate,
 }) {
   const data = buildAccountBalanceSeries(transactions, startDate, endDate);
+  const { translate, i18n, lang } = useI18n("common");
+  const nfCurrency = new Intl.NumberFormat(lang, {
+    style: "currency",
+    currency: "EUR",
+  });
+  const df = (iso) => new Date(iso).toLocaleDateString(lang);
   return (
     <Wrapper as="figure" aria-labelledby="timeline-title" role="group">
-      <Title id="timeline-title">Transactions by Time</Title>
+      <Title id="timeline-title">{translate("timeline.title")}</Title>
       <CardLike>
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={data}>
@@ -105,13 +112,13 @@ export default function AccountBalanceTimeLine({
               }
               tickMargin={8}
             />
-            <YAxis width={96} tickFormatter={(value) => euro.format(value)} />
+            <YAxis width={96} tickFormatter={(value) => nfCurrency.format(value)} />
             <ReferenceLine y={0} strokeDasharray="2 2" />
             <Tooltip
               labelFormatter={(value) =>
                 new Date(value).toLocaleDateString("de-DE")
               }
-              formatter={(value) => [euro.format(value), "Balance"]}
+              formatter={(value) => [nfCurrency.format(value), translate("timeline.balance")]}
             />
             <Line
               type="monotone"
@@ -123,10 +130,7 @@ export default function AccountBalanceTimeLine({
           </LineChart>
         </ResponsiveContainer>
       </CardLike>
-      <SrCaption>
-        Cumulative account balance per day. Zero line marks negative vs positive
-        values
-      </SrCaption>
+      <SrCaption>{translate("timeline.caption")}</SrCaption>
     </Wrapper>
   );
 }

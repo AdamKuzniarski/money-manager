@@ -8,14 +8,18 @@ import BottomNav from "@/components/BottomNav";
 import "driver.js/dist/driver.css";
 import { useEffect } from "react";
 import { maybeStartTour } from "@/tour/TourManager";
+import { appWithTranslation, useTranslation } from "next-i18next";
 
-export default function App({
+const nextI18nextConfig = require("../next-i18next.config");
+function App({
   Component,
   pageProps: { session, ...pageProps },
 }) {
+  const { t: translate, i18n } = useTranslation("common");
+  
   useEffect(() => {
-    maybeStartTour();
-  }, []);
+    maybeStartTour(translate);
+  }, [i18n.resolvedLanguage, translate]);
   return (
     <SWRConfig
       value={{
@@ -50,3 +54,4 @@ function Auth({ children }) {
   }
   return children;
 }
+export default appWithTranslation(App, nextI18nextConfig);

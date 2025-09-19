@@ -1,5 +1,8 @@
 import { useState, useMemo } from "react";
 import styled from "styled-components";
+import { useI18n } from "@/lib/use-i18n";
+import { labelForCategory } from "@/lib/use-i18n";
+
 import {
   ResponsiveContainer,
   PieChart,
@@ -49,6 +52,7 @@ function buildCategoryData(transactions = [], type) {
 
 export default function CategoryPieChart({ transactions = [] }) {
   const [mode, setMode] = useState("expense");
+  const { translate } = useI18n();
 
   const data = useMemo(
     () => buildCategoryData(transactions, mode),
@@ -61,7 +65,7 @@ export default function CategoryPieChart({ transactions = [] }) {
   );
 
   if (transactions.length === 0) {
-    return <EmptyState>No transactions available.</EmptyState>;
+    return <EmptyState>{translate("charts.noTransactions")}</EmptyState>;
   }
 
   return (
@@ -72,22 +76,22 @@ export default function CategoryPieChart({ transactions = [] }) {
           onClick={() => setMode("expense")}
           $active={mode === "expense"}
         >
-          Expense
+          {translate("charts.expense")}
         </ModeButton>
         <ModeButton
           type="button"
           onClick={() => setMode("income")}
           $active={mode === "income"}
         >
-          Income
+          {translate("charts.income")}
         </ModeButton>
       </TopBar>
       <TotalText>
-        Total: <strong>{toCurrencyEUR(total)}</strong>
+        {translate("charts.total")}: <strong>{toCurrencyEUR(total)}</strong>
       </TotalText>
       {data.length === 0 ? (
         <EmptyState>
-          No data for <strong>{mode}</strong> found.
+          {translate("charts.noDataFor", { mode: translate(`charts.${mode}`) })}
         </EmptyState>
       ) : (
         <div style={{ width: "100%", height: 360 }}>
@@ -108,10 +112,15 @@ export default function CategoryPieChart({ transactions = [] }) {
                 ))}
               </Pie>
               <Tooltip
-                formatter={(value) => [toCurrencyEUR(value), "Sum"]}
+                formatter={(val, name) => [
+                  toCurrencyEUR(val),
+                  labelForCategory(translate, name),
+                ]}
                 separator=" "
               />
-              <Legend />
+              <Legend
+                formatter={(value) => labelForCategory(translate, value)}
+              />
             </PieChart>
           </ResponsiveContainer>
         </div>

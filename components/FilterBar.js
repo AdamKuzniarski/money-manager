@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useI18n } from "@/lib/use-i18n";
+import { labelForCategory } from "@/lib/use-i18n";
 import styled from "styled-components";
 
 export default function FilterBar({
@@ -14,6 +16,7 @@ export default function FilterBar({
   const [showCustomModal, setShowCustomModal] = useState(false);
   const [customFrom, setCustomFrom] = useState(dateFrom ?? "");
   const [customTo, setCustomTo] = useState(dateTo ?? "");
+  const { translate } = useI18n();
 
   function handleTimeFilterChange(event) {
     const value = event.target.value;
@@ -41,43 +44,43 @@ export default function FilterBar({
       <Bar data-tour="filter-bar">
        
           <label>
-            Category
+            {translate("filters.category")}
             <select
               value={value}
               onChange={(event) => onChangeCategory(event.target.value)}
             >
-              <option value="">All Categories</option>
+              <option value="">{translate("filters.allCategories")}</option>
               {categories.map((category) => (
                 <option key={category._id} value={category.name}>
-                  {category.name}
+                  {labelForCategory(translate, category.name)}
                 </option>
               ))}
             </select>
           </label>
         
         <Field>
-          <label htmlFor="time-filter">Time Filter</label>
+          <label htmlFor="time-filter">{translate("filters.timeFilter")}</label>
           <TimeSelect
             id="time-filter"
             onChange={handleTimeFilterChange}
             value={preset}
             data-tour="time-filter"
           >
-            <option value="all">All</option>
-            <option value="today">Today</option>
-            <option value="7">Last 7 Days</option>
-            <option value="30">Last 30 Days</option>
-            <option value="month">This Month</option>
-            <option value="custom">Custom...</option>
+            <option value="all">{translate("filters.all")}</option>
+            <option value="today">{translate("filters.today")}</option>
+            <option value="7">{translate("filters.last7")}</option>
+            <option value="30">{translate("filters.last30")}</option>
+            <option value="month">{translate("filters.thisMonth")}</option>
+            <option value="custom">{translate("filters.custom")}</option>
           </TimeSelect>
         </Field>
         {showCustomModal && (
           <Backdrop onClick={closeModal} aria-modal="true" role="dialog">
             <ModalCard onClick={(event) => event.stopPropagation()}>
-              <h3>Custom range</h3>
+              <h3>{translate("filters.customRange")}</h3>
               <div>
                 <label>
-                  From
+                  {translate("filters.from")}
                   <input
                     type="date"
                     value={customFrom}
@@ -85,7 +88,7 @@ export default function FilterBar({
                   />
                 </label>
                 <label>
-                  To
+                  {translate("filters.to")}
                   <input
                     type="date"
                     value={customTo}
@@ -95,10 +98,10 @@ export default function FilterBar({
               </div>
               <ModalActions>
                 <button type="button" onClick={closeModal}>
-                  Cancel
+                  {translate("common.cancel")}
                 </button>
                 <button type="button" onClick={applyCustomRange}>
-                  Apply
+                  {translate("common.apply")}
                 </button>
               </ModalActions>
             </ModalCard>

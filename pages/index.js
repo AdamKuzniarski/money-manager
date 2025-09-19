@@ -15,6 +15,9 @@ import TransactionForm from "@/components/TransactionForm.js";
 import { toast } from "react-toastify";
 import { notify } from "@/lib/toast";
 import { toCurrencyEUR } from "@/lib/format";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations"; //so kennt die seite beim ersten laden alle texte
+import { useI18n } from "@/lib/use-i18n"; //hook, der translate bereitstellt
 
 export default function HomePage() {
   const [editingTransaction, setEditingTransaction] = useState(null);
@@ -22,6 +25,8 @@ export default function HomePage() {
   //pagination States
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
+
+  const { translate } = useI18n();
 
   const [filters, setFilters] = useState({
     category: "",
@@ -64,13 +69,13 @@ export default function HomePage() {
   if (error)
     return (
       <Status role="status" aria-live="polite">
-        failed to load
+        {translate("screen.failedToLoad")}
       </Status>
     );
   if (isLoading)
     return (
       <Status role="status" aria-live="polite">
-        Loading...
+        {translate("common.loading")}
       </Status>
     );
 
@@ -168,14 +173,11 @@ export default function HomePage() {
     setEditingTransaction(null);
     setIsFormOpen(false);
     await mutate();
-    notify.saved();
+    notify.saved(translate);
   }
 
-
   async function handleDelete(id) {
-    const confirm = window.confirm(
-      "Are you sure that you want to delete this transaction?"
-    );
+    const confirm = window.confirm(translate("actions.confirmDelete"));
 
     if (!confirm) return;
 
@@ -188,14 +190,17 @@ export default function HomePage() {
       return;
     }
     await mutate();
-    notify.deleted();
+    notify.deleted(translate);
   }
 
   return (
     <Main aria-label="Finance dashboard" data-tour="introApp">
       <CardControls>
         <AuthButtons />
+        <LanguageSwitcher />
       </CardControls>
+
+    
       <Card data-tour="balance-summary">
         <TourFocus data-tour-target="inner">
           <AccountBalance transactions={transactions} />
@@ -206,11 +211,11 @@ export default function HomePage() {
           <FilteredBalanceRow>
             <FilteredBalance
               $neg={sumTotal < 0}
-              title="Filtered Balance:"
+              title={translate("filters.filteredBalance")}
               aria-live="polite"
-              aria-label={`Filtered balance is ${sumTotal.toFixed(2)} euros`}
+              aria-label={translate("filters.filteredBalanceAria")}
             >
-              Filtered Balance: {toCurrencyEUR(sumTotal)}
+              {translate("filters.filteredBalance")}: {toCurrencyEUR(sumTotal)}
             </FilteredBalance>
           </FilteredBalanceRow>
         )}
@@ -227,7 +232,7 @@ export default function HomePage() {
         />
         {(filters.dateFrom || filters.dateTo) && (
           <ActiveFilterRow>
-            <span role="label">Time span:</span>
+            <span role="label">{translate("filters.timeSpan")}:</span>
             <ActiveBadge role="label">
               {filters.dateFrom || " ... "}- {filters.dateTo || "..."}
             </ActiveBadge>
@@ -244,20 +249,22 @@ export default function HomePage() {
         />
       </CardFilter>
 
-      <TransactionsList
-        aria-labelledby="transactions-title"
-        data-tour="transactions-list"
-      >
-        <ScreenReaderH2 id="transactions-title">Transactions</ScreenReaderH2>
+      <TransactionsList aria-labelledby="transactions-title">
+        <ScreenReaderH2 id="transactions-title">
+          {translate("screen.transactionsTitle")}
+        </ScreenReaderH2>
+
         {filteredTransactions.length === 0 ? (
-          <EmptyState>No Results Available</EmptyState>
+          <EmptyState>{translate("screen.noResults")}</EmptyState>
         ) : (
           paginatedTransactions.map((transaction) => (
             <TransactionsListItem
               key={transaction._id}
-              aria-label={`${transaction.name ?? "unknown"}:${
-                transaction.amount
-              }€ ${transaction.date}`}
+              aria-label={translate("screen.transactionAria", {
+                name: transaction.name ?? translate("screen.unknown"),
+                amount: transaction.amount,
+                date: transaction.date,
+              })}
             >
               <TransactionItem
                 onEdit={handleEdit}
@@ -290,6 +297,16 @@ export default function HomePage() {
       <ImportExportDataInCsv />
     </Main>
   );
+}
+
+//Der Wrapper gibt deiner App den i18n-Context,
+//damit useTranslation() überall funktioniert (auch beim Server-Rendern).
+export async function getServerSideProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["common"])), //lädt das common namespace für die aktuelle sprache
+    },
+  };
 }
 
 const TransactionsList = styled.ul`
@@ -405,3 +422,4 @@ const TourFocus = styled.div`
   position: relative;
   border-radius: inherit;
 `;
+

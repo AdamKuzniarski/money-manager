@@ -1,10 +1,12 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import styled from "styled-components";
+import { useI18n } from "@/lib/use-i18n";
 
 export default function BottomNav() {
   const { pathname } = useRouter();
-
+  const { translate } = useI18n();
+  
   return (
     <Bar role="navigation" aria-label="Main navigation">
       <NavItem
@@ -12,7 +14,7 @@ export default function BottomNav() {
         $active={pathname === "/"}
         aria-current={pathname === "/" ? "page" : undefined}
       >
-        Home
+        {translate("nav.home")}
       </NavItem>
       <NavItem
         href="/create"
@@ -20,7 +22,7 @@ export default function BottomNav() {
         aria-current={pathname === "/" ? "page" : undefined}
         data-tour="nav-create"
       >
-        Create
+       {translate("nav.add")}
       </NavItem>
       <NavItem
         href="/analytics"
@@ -28,7 +30,7 @@ export default function BottomNav() {
         aria-current={pathname === "/" ? "page" : undefined}
         data-tour="nav-analytics"
       >
-        Analytics
+        {translate("nav.charts")}
       </NavItem>
     </Bar>
   );

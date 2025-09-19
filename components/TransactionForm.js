@@ -1,11 +1,13 @@
 import { useState } from "react";
 import styled from "styled-components";
 import useSWR from "swr";
+import { useI18n } from "@/lib/use-i18n";
 
 export default function Form({ onSubmit, defaultValues, onCancel }) {
   const { data: categories, isLoading, error } = useSWR("/api/categories");
 
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const { translate } = useI18n();
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -38,24 +40,24 @@ export default function Form({ onSubmit, defaultValues, onCancel }) {
   return (
     <>
       <FormWrapper>
-        <HeaderForm>Please fill out all fields</HeaderForm>
+        <HeaderForm>{translate("form.header")}</HeaderForm>
         <FormContainer onSubmit={handleSubmit}>
-          <Label htmlFor="name">Transaction Name</Label>
+          <Label htmlFor="name">{translate("form.name")}</Label>
           <Input
             id="name"
             name="name"
             type="text"
-            placeholder="Please add your name"
+            placeholder={translate("form.namePh")}
             autoComplete="off"
             required
             defaultValue={defaultValues?.name}
           />
-          <Label htmlFor="amount">Amount</Label>
+          <Label htmlFor="amount">{translate("form.amount")}</Label>
           <Input
             id="amount"
             name="amount"
             type="text"
-            placeholder="Please add amount"
+            placeholder={translate("form.amount")}
             inputMode="decimal"
             pattern="[0-9]+([,.][0-9]{1,2})?"
             required
@@ -72,7 +74,7 @@ export default function Form({ onSubmit, defaultValues, onCancel }) {
             required
           >
             <option value="" disabled>
-              Choose category
+              {translate("form.chooseCategory")}
             </option>
             {categories.map((category) => (
               <option key={category._id} value={category.name}>
@@ -80,7 +82,7 @@ export default function Form({ onSubmit, defaultValues, onCancel }) {
               </option>
             ))}
           </Select>
-          <TypeRow aria-label="Type">
+          <TypeRow aria-label={translate("form.type")}>
             <HiddenRadio
               id="type-income"
               value="income"
@@ -89,19 +91,18 @@ export default function Form({ onSubmit, defaultValues, onCancel }) {
               required
               defaultChecked={defaultValues?.type === "income"}
             />
-            <Label htmlFor="type-income">Income</Label>
+            <Label htmlFor="type-income">{translate("form.income")}</Label>
             <HiddenRadio
               id="type-expense"
               value="expense"
               name="type"
               type="radio"
-              checked
               required
               defaultChecked={defaultValues?.type === "expense"}
             />
-            <Label htmlFor="type-expense">Expense</Label>
+            <Label htmlFor="type-expense">{translate("form.expense")}</Label>
           </TypeRow>
-          <Label htmlFor="date">Date</Label>
+          <Label htmlFor="date">{translate("form.date")}</Label>
           <Input
             id="date"
             name="date"
@@ -114,8 +115,12 @@ export default function Form({ onSubmit, defaultValues, onCancel }) {
             }
           />
           <ButtonContainer>
-            <AddButton type="submit" disabled={isButtonDisabled} data-tour="submit-transaction">
-              {defaultValues ? "Save" : "Add"}
+            <AddButton
+              type="submit"
+              disabled={isButtonDisabled}
+              data-tour="submit-transaction"
+            >
+              {defaultValues ? translate("common.save") : translate("form.add")}
             </AddButton>
             <CancelButton
               type="reset"
@@ -124,7 +129,7 @@ export default function Form({ onSubmit, defaultValues, onCancel }) {
               aria-label="Cancel and close the form"
               data-tour="cancel-form"
             >
-              Cancel
+              {translate("form.cancelAria")}
             </CancelButton>
           </ButtonContainer>
         </FormContainer>

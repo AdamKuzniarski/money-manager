@@ -1,7 +1,9 @@
 import styled from "styled-components";
 import { toCurrencyEUR } from "@/lib/format";
+import { useI18n } from "@/lib/use-i18n";
 
 export default function AccountBalance({ transactions }) {
+  const { translate } = useI18n(); 
   if (!transactions) return null;
 
   const balance = transactions.reduce(
@@ -11,11 +13,13 @@ export default function AccountBalance({ transactions }) {
 
   return (
     <BalanceContainer>
-      <h2>Account Balance</h2>
+      <h2>{translate("balance.title")}</h2>
       <BalanceValue
         $isNegative={balance < 0}
         aria-live="polite"
-        aria-label={`Account is ${toCurrencyEUR(balance)}`}
+        aria-label={translate("balance.aria", {
+          value: toCurrencyEUR(balance),
+        })}
       >
         {toCurrencyEUR(balance)}
       </BalanceValue>

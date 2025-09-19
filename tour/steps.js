@@ -1,114 +1,106 @@
-export function getSteps() {
+import { useI18n } from "@/lib/use-i18n";
+
+export function getSteps(translate) {
+  
   return [
     {
       element: '[data-tour="introApp"]',
       popover: {
-        title: "Hello in Money Manager App",
-        description:
-          "This a simple way to overview your finances.",
+        title: translate("tour.intro.title"),
+        description: translate("tour.intro.desc"),
         side: "top",
-        align: "start",
-      },
+        align: "start"
+      }
     },
     {
       element: '[data-tour="balance-summary"]',
       popover: {
-        title: "Balance overview",
-        description:
-          "This shows your total balance. It updates as you add, edit or delete transactions.",
+        title: translate("tour.balance.title"),
+        description: translate("tour.balance.desc"),
         side: "bottom",
-        align: "start",
-      },
+        align: "start"
+      }
     },
     {
       element: '[data-tour="filter-bar"]',
       popover: {
-        title: "Filter your view",
-        description:
-          "Filter by category or time. Use presets or a custom date range.",
+        title: translate("tour.filters.title"),
+        description: translate("tour.filters.desc"),
         side: "top",
-        align: "start",
-      },
+        align: "start"
+      }
     },
     {
       element: '[data-tour="time-filter"]',
       popover: {
-        title: "Time presets",
-        description:
-          "Quickly switch between Today, Last 7 days, This month, or set a custom range.",
+        title: translate("tour.timePresets.title"),
+        description: translate("tour.timePresets.desc"),
         side: "right",
-        align: "start",
-      },
+        align: "start"
+      }
     },
     {
       element: '[data-tour="transactions-list"]',
       popover: {
-        title: "Transactions",
-        description: "Your entries appear here. Edit or delete them anytime.",
+        title: translate("tour.list.title"),
+        description: translate("tour.list.desc"),
         side: "top",
-        align: "start",
-      },
+        align: "start"
+      }
     },
-   
     {
       element: '[data-tour="nav-create"]',
       popover: {
-        title: "Add new transaction",
-        description: "Tap here to add income or expense.",
+        title: translate("tour.add.title"),
+        description: translate("tour.add.desc"),
         side: "top",
-        align: "center",
-      },
+        align: "center"
+      }
     },
     {
       element: '[data-tour="nav-analytics"]',
       popover: {
-        title: "Charts & insights",
-        description: "Open analytics to see your spending by category.",
+        title: translate("tour.analytics.title"),
+        description: translate("tour.analytics.desc"),
         side: "top",
-        align: "center",
-      },
+        align: "center"
+      }
     },
-
     {
       element: '[data-tour="per-page"]',
       popover: {
-        title: "Items per page",
-        description:
-          "Choose how many transactions you see at once: 10, 15, or 20. Changing this resets to page 1.",
+        title: translate("tour.perPage.title"),
+        description: translate("tour.perPage.desc"),
         side: "bottom",
-        align: "center",
-      },
+        align: "center"
+      }
     },
-
     {
       element: '[data-tour="csv-export"]',
       popover: {
-        title: "Export your data",
-        description: "Click here to download your transactions as a CSV file.",
+        title: translate("tour.csvExport.title"),
+        description: translate("tour.csvExport.desc"),
         side: "bottom",
-        align: "center",
-      },
+        align: "center"
+      }
     },
     {
       element: '[data-tour="csv-import"]',
       popover: {
-        title: "Import data",
-        description: "Bring your own CSV and import transactions into the app.",
+        title: translate("tour.csvImport.title"),
+        description: translate("tour.csvImport.desc"),
         side: "bottom",
-        align: "center",
-      },
+        align: "center"
+      }
     },
-    // …
-
     {
       element: '[data-tour="analytics-chart"]',
       popover: {
-        title: "Category breakdown",
-        description:
-          "A pie chart summarizes your categories. Use it to spot trends.",
+        title: translate("tour.chart.title"),
+        description: translate("tour.chart.desc"),
         side: "bottom",
-        align: "start",
-      },
-    },
+        align: "start"
+      }
+    }
   ];
 }

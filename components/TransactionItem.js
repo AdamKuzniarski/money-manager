@@ -1,12 +1,16 @@
 import styled from "styled-components";
+import { useTranslation } from "next-i18next";
+import { labelForCategory } from "@/lib/use-i18n";
 
 export default function TransactionItem({ transaction, onEdit, onDelete }) {
+  const { t: translate, i18n } = useTranslation("common");
+  const locale = i18n.resolvedLanguage || i18n.language || "en";
   return (
     <StyledTransactionItem key={transaction._id}>
       <TransactionsName title={transaction.name ?? ""}>
         {transaction.name}
       </TransactionsName>
-      <CategoryBadge>{transaction.category ?? "Uncategorisiert"}</CategoryBadge>
+      <CategoryBadge>{labelForCategory(translate, transaction.category)}</CategoryBadge>
       <Amount $type={transaction.type}>
         {new Intl.NumberFormat("de-DE", {
           style: "currency",
@@ -18,24 +22,14 @@ export default function TransactionItem({ transaction, onEdit, onDelete }) {
         {new Date(transaction.date).toLocaleDateString("de-DE")}
       </DateText>
       <Actions>
-        <button
-          onClick={() => onEdit(transaction)}
-          
-        >
-          Edit
-        </button>
-        <button
-          onClick={() => onDelete(transaction._id)}
-          
-        >
-          Delete
-        </button>
+        <button onClick={() => onEdit(transaction)}>{translate("common.edit")}</button>
+        <button onClick={() => onDelete(transaction._id)}>{translate("common.delete")}</button>
       </Actions>
     </StyledTransactionItem>
   );
 }
 
-const StyledTransactionItem = styled.li`
+const StyledTransactionItem = styled.div`
   display: grid;
   grid-template-columns: 1fr auto;
   grid-template-rows: auto auto auto;
