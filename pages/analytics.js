@@ -5,8 +5,17 @@ import AccountBalanceTimeline from "@/components/AccountBalanceTimeline";
 import { Card } from "@/components/ui/Primitives";
 import { useState } from "react";
 import { useI18n } from "@/lib/use-i18n";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 //helpers
+export async function getServerSideProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["common"])),
+    },
+  };
+}
+
 function formatDate(isoString, locale = "en") {
   if (!isoString) return "...";
 
@@ -181,8 +190,14 @@ export default function Analytics() {
 
           {showRangeBadge && (
             <ActiveRange aria-live="polite">
-              {formatDate(dateFrom, typeof navigator !== "undefined" ? navigator.language : "en")}
-              {formatDate(dateTo, typeof navigator !== "undefined" ? navigator.language : "en")}
+              {formatDate(
+                dateFrom,
+                typeof navigator !== "undefined" ? navigator.language : "en"
+              )}
+              {formatDate(
+                dateTo,
+                typeof navigator !== "undefined" ? navigator.language : "en"
+              )}
             </ActiveRange>
           )}
 

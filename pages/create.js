@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import Form from "@/components/TransactionForm";
 import { notify } from "@/lib/toast";
 import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 export default function CreatePage() {
   const router = useRouter();
@@ -30,4 +31,12 @@ export default function CreatePage() {
       <Form onSubmit={handleSubmit} onCancel={() => router.back()} />
     </main>
   );
+}
+
+export async function getServerSideProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["common"])),
+    },
+  };
 }
