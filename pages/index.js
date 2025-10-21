@@ -200,7 +200,6 @@ export default function HomePage() {
         <LanguageSwitcher />
       </CardControls>
 
-    
       <Card data-tour="balance-summary">
         <TourFocus data-tour-target="inner">
           <AccountBalance transactions={transactions} />
