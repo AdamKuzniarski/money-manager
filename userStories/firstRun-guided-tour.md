@@ -11,20 +11,20 @@
 ## Description
 
 A short, skippable, first-run guide users driver.js to highlight key UI elements
-The tour runs runs once per device, (persisted in local storage)
+The tour runs once per device, (persisted in local storage)
 
 ## Acceptance Criteria
 
-- The tour users driver,js to spotlight real elements in the current page without breaking layout
-- The tour appears only on first app launch - for a new users and is skippable at any time
+- The tour users driver.js to spotlight real elements in the current page without breaking layout
+- The tour appears only on first app launch - for  new users and is skippable at any time
 - Each step has clear, short explaining the element's purpose
-- The first-run is with keyboard supported - focus is tapped
+- The first-run is with keyboard supported - focus 
 - A flag in localStorage e.g. hasSeenTour="true" prevents auto-rerun after completion or skip
 
 ## Tasks
 
 - [ ] Create a new folder `tour` and file `steps.js` for the guide
-- [ ] Add data attributes **Research** to targeted elements data-tour="..."
+- [ ] Add data attributes **Research** to targeted elements `data-tour="..."`
 - [ ] Add button/ checkbox to restart tour or skip tour
 - [ ] Implement `TourManager`library utility that can:
   - [ ] Check and set localStorage to hasSeen="true"

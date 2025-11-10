@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useI18n } from "@/lib/use-i18n";
 
 export default function Pagination({
   currentPage,
@@ -7,6 +8,7 @@ export default function Pagination({
   onPageChange,
   onPageSizeChange,
 }) {
+  const { translate } = useI18n();
   return (
     <PaginationWrapper>
       {/* previous button */}
@@ -16,18 +18,21 @@ export default function Pagination({
             onClick={() => onPageChange(currentPage - 1)}
             disabled={currentPage === 1}
           >
-            Previous
+            {translate("pagination.previous")}
           </Button>
 
           <PageInfo>
-            Page {currentPage} of {totalPages}
+            {translate("pagination.pageOf", {
+              page: currentPage,
+              pages: totalPages,
+            })}
           </PageInfo>
 
           <Button
             onClick={() => onPageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
           >
-            Next
+            {translate("pagination.next")}
           </Button>
         </>
       )}
@@ -41,10 +46,11 @@ export default function Pagination({
             onPageChange(1);
           }
         }}
+        data-tour="per-page"
       >
         {[10, 15, 20].map((size) => (
           <option key={size} value={size}>
-            {size} per page
+            {translate("pagination.perPage", { size })}
           </option>
         ))}
       </Select>
@@ -58,7 +64,7 @@ const PaginationWrapper = styled.div`
   justify-content: space-between;
   gap: 0.5rem;
   align-items: center;
-  margin: 20px 0 80px;
+  margin: 20px 0 20px;
   flex-wrap: wrap;
 `;
 

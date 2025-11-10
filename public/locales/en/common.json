@@ -1,0 +1,207 @@
+{
+  "nav": {
+    "home": "Home",
+    "add": "Add",
+    "charts": "Charts"
+  },
+  "intl": {
+    "language": "Language",
+    "en": "En",
+    "de": "Ger"
+  },
+  "auth": {
+    "signIn": "Sign in",
+    "signOut": "Sign out",
+    "notSignedIn": "Not signed in"
+  },
+  "common": {
+    "loading": "Loading...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "apply": "Apply"
+  },
+  "balance": {
+    "title": "Account balance",
+    "aria": "Account is {{value}}"
+  },
+  "filters": {
+    "title": "Filter Cat / Filter Income",
+    "filteredBalance": "Filtered Balance",
+    "filteredBalanceAria": "Filtered balance is {{value}} euros",
+    "timeSpan": "Time span",
+    "category": "Category",
+    "allCategories": "All Categories",
+    "timeFilter": "Time Filter",
+    "all": "All",
+    "today": "Today",
+    "last7": "Last 7 Days",
+    "last30": "Last 30 Days",
+    "thisMonth": "This Month",
+    "custom": "Custom...",
+    "customRange": "Custom range",
+    "from": "From",
+    "to": "To",
+    "byType": "Filter by type",
+    "type": {
+      "all": "All",
+      "income": "Income",
+      "expense": "Expense"
+    }
+  },
+  "csv": {
+    "export": "Export CSV",
+    "import": "Import CSV"
+  },
+  "pagination": {
+    "previous": "Previous",
+    "next": "Next",
+    "pageOf": "Page {{page}} of {{pages}}",
+    "perPage": "{{size}} per page"
+  },
+  "transactions": {
+    "uncategorized": "Uncategorized"
+  },
+  "create": {
+    "title": "Create Transaction"
+  },
+  "form": {
+    "header": "Please fill out all fields",
+    "name": "Transaction Name",
+    "namePh": "Please add your name",
+    "amount": "Amount",
+    "amountPh": "Please add amount",
+    "chooseCategory": "Choose category",
+    "type": "Type",
+    "income": "Income",
+    "expense": "Expense",
+    "date": "Date",
+    "add": "Add",
+    "cancelAria": "Cancel"
+  },
+  "screen": {
+    "failedToLoad": "Failed to load",
+    "transactionsTitle": "Transactions",
+    "noResults": "No Results Available",
+    "unknown": "unknown",
+    "transactionAria": "{{name}}: {{amount}}€ {{date}}"
+  },
+  "actions": {
+    "confirmDelete": "Are you sure that you want to delete this transaction?"
+  },
+  "charts": {
+    "title": "Transactions by Category",
+    "failedToLoad": "Failed to load transactions",
+    "loading": "Loading transactions...",
+    "expense": "Expense",
+    "income": "Income",
+    "total": "Total",
+    "sum": "Sum",
+    "noTransactions": "No transactions available.",
+    "noDataFor": "No data for {{mode}} found.",
+    "summaryAria": "Pie chart summary",
+    "summaryText": "Pie chart showing expenses by category.",
+    "time": "Time",
+    "categories": "Categories",
+    "range": {
+      "7d": "7d",
+      "30d": "30d",
+      "90d": "90d",
+      "ytd": "YTD",
+      "from": "From",
+      "to": "To"
+    }
+  },
+
+  "categories": {
+    "Restaurants": "Restaurants",
+    "Education": "Education",
+    "Salary": "Salary",
+    "Savings": "Savings",
+    "Groceries": "Groceries",
+    "Entertainment": "Entertainment",
+    "Utilities": "Utilities",
+    "Health": "Health",
+    "Rent": "Rent",
+    "Transportation": "Transportation",
+    "Insurance": "Insurance",
+    "Investment": "Investment"
+  },
+
+  "toasts": {
+    "saved": "Transaction saved!",
+    "deleted": "Transaction deleted!",
+    "error": "Please try again.",
+    "dataSaved": "Done: Data saved.",
+    "importSuccess": "Import successful.",
+    "exportSuccess": "Export successful. File has been downloaded.",
+    "dataSavedCount": "{{count}} row saved",
+    "dataSavedCount_plural": "{{count}} rows saved",
+    "importInProgress": "Import in progress.",
+    "selectFileBefore": "Please choose a .csv file before importing.",
+    "onlyCsv": "Please select a .csv file.",
+    "importFail": "Import failed!",
+    "parseFail": "Import failed: CSV contains errors.",
+    "readFail": "Import failed: can't read data.",
+    "exportFail": "Export failed!",
+    "noData": "No data to export!"
+  },
+  "tour": {
+    "intro": {
+      "title": "Welcome to Money Manager",
+      "desc": "An easy way to keep an overview of your finances."
+    },
+    "balance": {
+      "title": "Balance overview",
+      "desc": "Shows your total balance. Updates when you add, edit or delete."
+    },
+    "filters": {
+      "title": "Filter your view",
+      "desc": "Filter by category or time. Use presets or a custom range."
+    },
+    "timePresets": {
+      "title": "Time presets",
+      "desc": "Quickly switch between Today, Last 7 days, This month, or set a custom range."
+    },
+    "list": {
+      "title": "Transactions",
+      "desc": "Your entries appear here. Edit or delete them anytime."
+    },
+    "add": {
+      "title": "Add new transaction",
+      "desc": "Tap here to add income or expense."
+    },
+    "analytics": {
+      "title": "Charts & insights",
+      "desc": "Open analytics to see your spending by category."
+    },
+    "perPage": {
+      "title": "Items per page",
+      "desc": "Choose 10, 15, or 20. Changing resets to page 1."
+    },
+    "csvExport": {
+      "title": "Export your data",
+      "desc": "Download your transactions as a CSV file."
+    },
+    "csvImport": {
+      "title": "Import data",
+      "desc": "Bring your CSV and import transactions into the app."
+    },
+    "chart": {
+      "title": "Category breakdown",
+      "desc": "A pie chart summarizes your categories to spot trends."
+    },
+    "buttons": {
+      "next": "Next",
+      "prev": "Previous",
+      "done": "Done",
+      "close": "Close"
+    }
+  },
+  "timeline": {
+    "title": "Account balance over time",
+    "balance": "Balance",
+    "caption": "Cumulative daily balances. The zero line separates negative from positive values."
+  }
+}
